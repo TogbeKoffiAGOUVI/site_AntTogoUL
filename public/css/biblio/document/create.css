@@ -1,0 +1,199 @@
+/* ---------------------------------- */
+/* Conteneur et Titre                 */
+/* ---------------------------------- */
+.form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.form-title {
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* ---------------------------------- */
+/* Groupes de Champs & Labels         */
+/* ---------------------------------- */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #444;
+    font-size: 1.1em;
+}
+
+/* ---------------------------------- */
+/* Inputs Textes et Select            */
+/* ---------------------------------- */
+
+/* Styles pour INPUT (text, number) et SELECT */
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s;
+    background-color: #fff;
+    /* Assure un fond blanc pour le select */
+    appearance: none;
+    /* Cache le style par défaut du select sur certains navigateurs */
+}
+
+/* Styles spécifiques au Select */
+.form-select {
+    /* Ajoute un petit triangle pour simuler le dropdown standard */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%20197.8L146.2%2057%205.4%20197.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 10px auto;
+}
+
+/* Styles pour le Textarea */
+.form-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Styles pour l'Input File */
+.form-input-file {
+    padding: 10px 0;
+    /* Padding différent pour le type file */
+}
+
+/* Effet de focus (contour bleu) */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    border-color: #4A90E2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+/* ---------------------------------- */
+/* Messages de Succès et Erreur       */
+/* ---------------------------------- */
+.success-message-box {
+    padding: 15px;
+    margin-bottom: 25px;
+    background-color: #D4EDDA;
+    /* Vert clair */
+    color: #155724;
+    /* Texte vert foncé */
+    border: 1px solid #C3E6CB;
+    border-radius: 5px;
+}
+
+.error-message-box {
+    padding: 15px;
+    margin-bottom: 25px;
+    background-color: #F8D7DA;
+    /* Rouge clair */
+    color: #721C24;
+    /* Texte rouge foncé */
+    border: 1px solid #F5C6CB;
+    border-radius: 5px;
+}
+
+.error-message-box ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+    list-style-type: disc;
+}
+
+/* ---------------------------------- */
+/* Boutons d'Action                   */
+/* ---------------------------------- */
+.action-buttons-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+/* Bouton principal (Ajouter) */
+.primary-button {
+    background-color: #4A90E2;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+    background-color: #3A7CCB;
+}
+
+/* Lien secondaire (Créer Rubrique) */
+.secondary-button {
+    text-decoration: none;
+    padding: 12px 25px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* ---------------------------------- */
+/* -- Responsivité (Mobile) --        */
+/* ---------------------------------- */
+
+@media (max-width: 600px) {
+    .form-container {
+        margin: 20px 10px;
+        padding: 20px;
+        box-shadow: none;
+    }
+
+    .form-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    /* Tous les champs prennent moins de padding sur mobile */
+    .form-input,
+    .form-textarea,
+    .form-select {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    /* Le groupe de boutons passe en colonne */
+    .action-buttons-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+        /* Les deux boutons prennent toute la largeur */
+        padding: 14px;
+        text-align: center;
+    }
+}

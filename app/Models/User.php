@@ -18,10 +18,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'profile_picture',
         'name',
         'email',
         'password',
+        'profile_photo_path',
     ];
 
     /**
@@ -45,5 +45,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function profilePhoto()
+    {
+        // Un utilisateur a une photo de profil
+        return $this->hasOne(ProfilePhoto::class);
     }
 }

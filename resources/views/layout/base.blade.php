@@ -8,8 +8,17 @@
     <script src="https://kit.fontawesome.com/53db158c10.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginRegistration.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/category/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/category/edit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/category/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/category/show.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/document/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/document/edit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/document/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/biblio/document/show.css') }}">
+  
 
-    {{-- <link rel="stylesheet" href="css/home.css"> --}}
     <link
         href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Dancing+Script:wght@400..700&family=Fleur+De+Leah&family=Great+Vibes&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+AU+QLD:wght@100..400&family=Playwrite+PE+Guides&family=Playwrite+RO:wght@100..400&family=Romanesco&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
         rel="stylesheet">
@@ -20,7 +29,6 @@
 <body>
     {{-- Top bar --}}
     <header>
-
         <div class="Icon">
             <span class="TopBarIcon"><i class="fa-solid fa-phone"></i> &nbsp; +228 22 22 00 00</span>
             <span class="TopBarIcon"><i class="fa-solid fa-envelope"></i>&nbsp; youremail@gmail.com</span>
@@ -42,7 +50,6 @@
             <a href="#">
                 <i class="fa-brands fa-youtube"></i>
             </a>
-
         </div>
     </header>
 
@@ -52,7 +59,14 @@
         <div class="logo">
             <img src="{{ URL::asset('images/ONDE ANTHROPOLOGIQUE DU TOGO blanc.png') }}" alt=" logo">
         </div>
+
         @if (Auth::check())
+            @php
+                // Récupérer l'utilisateur pour un accès facile
+                $user = Auth::user();
+
+            @endphp
+
             <div class="MainMenu">
                 <div>
                     <ul>
@@ -84,16 +98,42 @@
                 </div>
                 <div>
                     <ul>
-                        <li><a href=""> Bibliothèque</a></li>
+                        <li><a href="{{ route('categories.index') }}"> Bibliothèque</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><a href="{{ route('documents.create') }}"> Ajouter un document</a></li>
                     </ul>
                 </div>
 
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit" class="btn">Logout ({{ Auth::user()->name }})</button>
-                </form>
+                {{-- SECTION: AFFICHAGE DE LA PHOTO ET LIEN DE PROFIL --}}
 
+                <div style="display: flex; align-items: center; margin-left: 10px;">
 
+                    {{-- 1. Afficher l'image de profil ou l'avatar par défaut --}}
+                    <a href="{{ route('profiles.edit', $user->id) }}" title="Mettre à jour le profil">
+                        @if ($user->profile_photo_path)
+                            {{-- Image stockée --}}
+                            <img src="{{ Storage::url($user->profile_photo_path) }}" alt="{{ $user->name }}"
+                                style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+                        @else
+                            {{-- Avatar par défaut (ex: première lettre du nom) --}}
+                            <div
+                                style="width: 35px; height: 35px; background: #6c757d; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </div>
+                        @endif
+                    </a>
+
+                    {{-- 2. Le bouton de Déconnexion --}}
+                    <form action="{{ route('logout') }}" method="post" style="margin-left: 10px;">
+                        @csrf
+                        <button type="submit" class="btn" style="white-space: nowrap;">
+                            Logout ({{ $user->name }})
+                        </button>
+                    </form>
+                </div>
 
             </div>
         @else
@@ -111,7 +151,7 @@
 
                 <div>
                     <ul>
-                        <li><a href="">Blog</a></li>
+                        <li><a href="{{ route('categories.index') }}">Blog</a></li>
                     </ul>
                 </div>
 
@@ -128,7 +168,12 @@
                 </div>
                 <div>
                     <ul>
-                        <li><a href=""> Bibliothèque</a></li>
+                        <li><a href="{{ route('documents.index') }}"> Bibliothèque</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><a href="{{ route('documents.create') }}"> Ajouter un ouvrage</a></li>
                     </ul>
                 </div>
 
@@ -139,7 +184,9 @@
 
 
     </nav>
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
 
 </body>
 
@@ -167,10 +214,6 @@
 
         </div>
     </div>
-
-
-
-
 
     <div class="contact">
         <h3>Contact</h3><br>

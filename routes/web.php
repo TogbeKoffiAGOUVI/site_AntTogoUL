@@ -5,6 +5,11 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ResearcherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryBlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\GuestMiddleware;
 
@@ -19,7 +24,11 @@ Route::middleware([GuestMiddleware::class])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::resource('formerStudents', StudentController::class)->except(['show']); //cette ligne me permet de definir une route contraint par une athentification mais sous reserve de l'authentification d'une exception
+
+    // ROUTE POUR LE FORMULAIRE D'AFFICHAGE ET D'UPLOAD DE PROFIL
+    Route::resource('profiles', ProfileController::class);
+
+    Route::resource('formerStudents', StudentController::class)->except(['show']);
     Route::resource('researchers', ResearcherController::class)->except(['show']);
 });
 
@@ -27,3 +36,11 @@ Route::get('/formerStudents/{student}', [StudentController::class, 'show'])->nam
 Route::get('/researchers/{researcher}', [ResearcherController::class, 'show'])->name('researchers.show');
 
 Route::get('/', [MainController::class, 'home'])->name(('home'));
+
+// Route pour mettre en place ma bibliothèque virtuelle
+Route::resource('documents', DocumentController::class);
+Route::resource('categories', CategoryController::class);
+
+// Route pour mettre en place ma bibliothèque virtuelle
+Route::resource('documents', PostController::class);
+Route::resource('categories', CategoryBlogController::class);

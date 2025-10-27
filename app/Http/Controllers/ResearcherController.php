@@ -60,7 +60,6 @@ class ResearcherController extends Controller
         return redirect()->route('researchers.index')->with('success', 'Chercheur ajouté avec succès');
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -83,42 +82,10 @@ class ResearcherController extends Controller
         ]);
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    // {
-    //     $request->validate([
-    //         'photo',
-    //         'firstname',
-    //         'lastname',
-    //         'graduate',
-    //         'searcherprofil',
-    //         'telephone',
-    //         'email',
-
-    //     ]);
-
-    //      $researcher = Researcher::findOrFail($id);
-
-    //     if ($request->hasFile('photo')) {
-
-    //         if ($researcher->photo) {
-
-    //             Storage::disk('public')->delete($researcher->photo);
-    //         }
-
-    //         $path = $request->file('photo')->store('researcher', 'public');
-    //         $validatedData['photo'] = $path;
-    //     } else {
-    //         unset($validatedData['photo']);
-    //     }
-
-    //     $researcher->update($validatedData);
-
-    //     return redirect()->route('researchers.index')->with('success', 'Mise à jour effectuée avec succès');
-    // }
     {
         // 1. Validation des données
         $validatedData = $request->validate([
@@ -158,15 +125,11 @@ class ResearcherController extends Controller
     public function destroy(string $id)
     {
         $researcher = Researcher::find($id);
-        //supprimer l'ancienne photo si celà existe
 
         if ($researcher->photo && file_exists(public_path('photo_profils/' . $researcher->photo))) {
             unlink(public_path('photo_profils/' . $researcher->photo));
         }
-
-
         $researcher->delete();
-
         return redirect()->route('researchers.index')->with('success', 'suppression effectuée avec succès');
     }
 }

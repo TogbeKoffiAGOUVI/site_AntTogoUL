@@ -67,7 +67,6 @@ class StudentController extends Controller
         return redirect()->route('formerStudents.index')->with('success', 'Etudiant(e) ajouté(e) avec succès');
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -89,10 +88,6 @@ class StudentController extends Controller
             'student' => $student,
         ]);
     }
-
-
-
-    // StudentController.php
 
     /**
      * Update the specified resource in storage.

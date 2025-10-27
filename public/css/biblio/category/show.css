@@ -1,0 +1,180 @@
+/* ---------------------------------- */
+/* Conteneur et Titre de la Page      */
+/* ---------------------------------- */
+.view-documents-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600; 
+}
+
+.category-name-display {
+    color: #4A90E2; /* Mettre en évidence le nom de la catégorie */
+}
+
+/* Lien de retour */
+.back-link {
+    display: inline-block;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: #4A90E2;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.back-link:hover {
+    color: #3A7CCB;
+    text-decoration: underline;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+    margin-bottom: 30px;
+}
+
+/* ---------------------------------- */
+/* Cartes des Documents               */
+/* ---------------------------------- */
+.documents-list {
+    display: grid;
+    /* Créer deux colonnes pour les écrans larges */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px; /* Espacement entre les cartes */
+}
+
+.document-card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Ombre légère pour effet de carte */
+    transition: transform 0.3s ease;
+}
+
+.document-card:hover {
+    transform: translateY(-3px); /* Petit effet de soulèvement au survol */
+}
+
+.document-title {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.document-description,
+.document-metadata {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* ---------------------------------- */
+/* Boutons d'Action (Lire/Télécharger)*/
+/* ---------------------------------- */
+.document-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur mobile */
+}
+
+.action-button {
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+    flex-grow: 1; /* Permet aux boutons de prendre de l'espace */
+    text-align: center;
+}
+
+/* Bouton principal (Lire) - Bleu */
+.primary-action {
+    background-color: #4A90E2;
+    color: white;
+    border: 1px solid #4A90E2;
+}
+
+.primary-action:hover {
+    background-color: #3A7CCB;
+}
+
+/* Bouton secondaire (Télécharger) - Blanc/Bordure bleue */
+.secondary-action {
+    background-color: white;
+    color: #4A90E2;
+    border: 1px solid #4A90E2;
+}
+
+.secondary-action:hover {
+    background-color: #F0F5FF;
+}
+
+/* ---------------------------------- */
+/* Message d'absence de document      */
+/* ---------------------------------- */
+.empty-state-box {
+    padding: 25px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    color: #777;
+    margin-top: 30px;
+}
+
+.empty-state-box strong {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* ---------------------------------- */
+/* Responsivité pour mobiles          */
+/* ---------------------------------- */
+@media (max-width: 600px) {
+    .view-documents-container {
+        margin: 20px 10px;
+        padding: 10px;
+    }
+    
+    .page-title {
+        font-size: 2em;
+    }
+
+    /* Une seule colonne pour les cartes sur mobile */
+    .documents-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .document-card {
+        padding: 20px;
+    }
+    
+    .document-actions {
+        flex-direction: column; /* Les boutons passent en mode bloc */
+        gap: 10px;
+    }
+
+    .action-button {
+        width: 100%; /* Pleine largeur pour les boutons sur mobile */
+    }
+}

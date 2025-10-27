@@ -1,0 +1,103 @@
+/* Styles pour le conteneur et la responsivité */
+.form-container {
+    max-width: 800px; /* Largeur maximale comme dans l'image */
+    margin: 40px auto; /* Centrage et espace autour */
+    padding: 20px;
+    background-color: #fff; /* Fond blanc, si le body est coloré */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Légère ombre, facultatif */
+}
+
+/* Titre du formulaire */
+.form-title {
+    font-size: 2em; /* Taille de police comme dans l'image */
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 500; /* Moins gras que le h2 par défaut */
+}
+
+/* Styles pour les labels */
+.form-label {
+    display: block; /* Prend toute la ligne */
+    margin-bottom: 5px;
+    font-weight: 600; /* Gras comme dans l'image */
+    color: #444;
+    font-size: 1.1em;
+}
+
+/* Styles généraux pour les inputs et textarea */
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 4px; /* Coins légèrement arrondis */
+    box-sizing: border-box; /* S'assure que padding n'augmente pas la largeur totale */
+    font-size: 1em;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Le textarea doit être plus haut pour le "Contenu" */
+.form-textarea {
+    min-height: 250px; /* Hauteur généreuse pour le champ de contenu */
+    resize: vertical; /* Permet de redimensionner verticalement */
+}
+
+/* Effet de focus (contour bleu comme dans l'image) */
+.form-input:focus,
+.form-textarea:focus {
+    border-color: #4A90E2; /* Bleu clair */
+    outline: none; /* Supprime le contour par défaut du navigateur */
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3); /* Légère ombre bleue */
+}
+
+/* Styles pour le bouton "Publier" */
+.submit-button {
+    background-color: #4A90E2; /* Couleur bleue */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    /* Aligné à gauche comme dans l'image */
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background-color: #3A7CCB; /* Bleu légèrement plus foncé au survol */
+}
+
+
+/* -- Responsivité -- */
+
+/* Pour les écrans plus petits (smartphones) */
+@media (max-width: 600px) {
+    .form-container {
+        margin: 20px 10px; /* Moins de marge pour les petits écrans */
+        padding: 15px;
+    }
+
+    .form-title {
+        font-size: 1.5em; /* Taille de titre réduite */
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 8px;
+        margin-bottom: 15px;
+    }
+
+    .form-textarea {
+        min-height: 150px; /* Hauteur réduite pour le contenu */
+    }
+
+    .submit-button {
+        width: 100%; /* Le bouton prend toute la largeur sur mobile */
+        padding: 12px;
+    }
+
+}
