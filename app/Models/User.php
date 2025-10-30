@@ -6,6 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Like; 
+use App\Models\Comment; 
+
+
 
 class User extends Authenticatable
 {
@@ -52,4 +56,21 @@ class User extends Authenticatable
         // Un utilisateur a une photo de profil
         return $this->hasOne(ProfilePhoto::class);
     }
+
+        /**
+     * Relation: Un Utilisateur peut avoir plusieurs Likes.
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Relation: Un Utilisateur peut avoir plusieurs Commentaires.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

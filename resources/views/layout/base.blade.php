@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="{{ asset('css/biblio/document/edit.css') }}">
     <link rel="stylesheet" href="{{ asset('css/biblio/document/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/biblio/document/show.css') }}">
-  
+    <link rel="stylesheet" href="{{ asset('css/blog/categorie/index.css') }}">
+
 
     <link
         href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Dancing+Script:wght@400..700&family=Fleur+De+Leah&family=Great+Vibes&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+AU+QLD:wght@100..400&family=Playwrite+PE+Guides&family=Playwrite+RO:wght@100..400&family=Romanesco&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
@@ -73,15 +74,11 @@
                         <li><a href="{{ route('home') }}">Accueil</a></li>
                     </ul>
                 </div>
-                <div>
-                    <ul>
-                        <li><a href="">Ethnologie</a></li>
-                    </ul>
-                </div>
 
                 <div>
                     <ul>
-                        <li><a href="">Blog</a></li>
+                        {{-- OK: Route publique du blog --}}
+                        <li><a href="{{ route('blog.categories.index') }}">EthnoBlog</a></li>
                     </ul>
                 </div>
 
@@ -98,12 +95,13 @@
                 </div>
                 <div>
                     <ul>
-                        <li><a href="{{ route('categories.index') }}"> Bibliothèque</a></li>
+                        {{-- OK: Route admin/membre pour la gestion des catégories/documents --}}
+                        <li><a href="{{ route('biblio.documents.index') }}"> Bibliothèque</a></li>
                     </ul>
                 </div>
                 <div>
                     <ul>
-                        <li><a href="{{ route('documents.create') }}"> Ajouter un document</a></li>
+                        <li><a href="{{ route('biblio.documents.create') }}> Ajouter un document</a></li>
                     </ul>
                 </div>
 
@@ -137,6 +135,7 @@
 
             </div>
         @else
+            {{-- SECTION VISITEUR (NON AUTHENTIFIÉ) --}}
             <div class="MainMenu">
                 <div>
                     <ul>
@@ -145,13 +144,7 @@
                 </div>
                 <div>
                     <ul>
-                        <li><a href="">Ethnologie</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <ul>
-                        <li><a href="{{ route('categories.index') }}">Blog</a></li>
+                        <li><a href="{{ route('blog.categories.index') }}">EthnoBlog</a></li>
                     </ul>
                 </div>
 
@@ -168,17 +161,13 @@
                 </div>
                 <div>
                     <ul>
-                        <li><a href="{{ route('documents.index') }}"> Bibliothèque</a></li>
+                        
+                        <li><a href="{{ route('biblio.documents.index') }}"> Bibliothèque</a></li>
                     </ul>
                 </div>
-                <div>
-                    <ul>
-                        <li><a href="{{ route('documents.create') }}"> Ajouter un ouvrage</a></li>
-                    </ul>
-                </div>
-
-                <button type="submit" class="btn"><a href="{{ route('login') }}">Se connecter</a></button>
-                <button type="submit" class="btn"><a href="{{ route('registration') }}">S'inscrire</a></button>
+                
+                <a href="{{ route('login') }}" class="btn">Se connecter</a>
+                <a href="{{ route('registration') }}" class="btn">S'inscrire</a>
             </div>
         @endif
 

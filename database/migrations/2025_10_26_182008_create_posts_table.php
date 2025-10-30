@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->string('slug')->unique();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('category_blogs')->onDelete('cascade');
             $table->text('content');
             $table->text('excerpt');
             $table->string('thumbnail_url')->nullable();

@@ -8,11 +8,11 @@
             <h1 class="document-main-title">{{ $document->title }}</h1>
             <div class="header-actions">
                 <!-- Retour à la liste -->
-                <a href="{{ route('documents.index') }}" class="back-link">
+                <a href="{{ route('biblio.documents.index') }}" class="back-link">
                     <span class="icon">←</span> Retour
                 </a>
                 <!-- Modifier -->
-                <a href="{{ route('documents.edit', $document->id) }}" class="edit-link">
+                <a href="{{ route('biblio.documents.edit', $document->id) }}" class="edit-link">
                     Modifier le document
                 </a>
             </div>
@@ -26,7 +26,7 @@
                 <h2 class="block-title">Informations Générales</h2>
                 <p class="detail-item">
                     <span class="label">Catégorie :</span>
-                    <span class="value">{{ $document->category->name ?? 'Non classé' }}</span>
+                    <span class="value">{{ $document->biblioCategory->name ?? 'Non classé' }}</span>
                 </p>
                 <p class="detail-item description">
                     <span class="label">Description :</span>
@@ -45,11 +45,11 @@
                     <div class="file-actions-group">
                         <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank"
                             class="file-action-button primary-action">
-                            <span class="icon">📖</span> Lire le document
+                            Lire le document
                         </a>
                         <a href="{{ asset('storage/' . $document->file_path) }}" download
                             class="file-action-button secondary-action">
-                            <span class="icon">⬇️</span> Télécharger
+                             Télécharger
                         </a>
                     </div>
                 @else

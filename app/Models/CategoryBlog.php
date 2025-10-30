@@ -7,15 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryBlog extends Model
 {
-     use HasFactory;
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
         'description'
     ];
-
+    
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'category_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

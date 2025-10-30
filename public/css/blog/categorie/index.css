@@ -1,0 +1,374 @@
+/* ---------------------------------------------------------------- */
+/* --- STYLES D'ADMINISTRATION (BLOCK @else) --- */
+/* ---------------------------------------------------------------- */
+
+.admin-main-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.page-title {
+    font-size: 2em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* --- Boutons d'Action Globaux (Créer/Ajouter) --- */
+.action-buttons-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.primary-button, .secondary-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.primary-button {
+    background-color: #007bff; /* Bleu principal */
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.secondary-button {
+    background-color: #6c757d; /* Gris secondaire */
+    color: white;
+}
+
+.secondary-button:hover {
+    background-color: #5a6268;
+}
+
+
+/* --- Messages de Session (Succès) --- */
+.success-message-box {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
+.success-message-box p {
+    margin: 0;
+}
+
+
+/* --- Liste des Catégories --- */
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.category-item:hover {
+    background-color: #f0f0f0;
+}
+
+.category-name-block {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.category-label {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: #6c757d;
+}
+
+.category-name {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+}
+
+/* --- Actions de la Catégorie (Modifier, Supprimer, Lire) --- */
+.category-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.action-link {
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Lien "Lire" (Voir les articles) */
+.view-link {
+    color: #007bff;
+}
+
+.view-link:hover {
+    background-color: #e6f2ff;
+}
+
+/* Lien "Modifier" */
+.edit-link {
+    color: #ffc107; /* Jaune */
+}
+
+.edit-link:hover {
+    background-color: #fff3cd;
+}
+
+/* Bouton "Supprimer" */
+.delete-form {
+    display: inline; /* S'assure qu'il s'aligne avec les autres liens */
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: #dc3545; /* Rouge */
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #f8d7da;
+}
+
+
+/* --- Message de liste vide --- */
+.empty-list-message {
+    padding: 20px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    text-align: center;
+    color: #856404;
+}
+
+/* --- Pagination Admin --- */
+/* Réutilise les styles de .pagination-links du bloc public si inclus, sinon : */
+.categories-list + .pagination-links {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* --- Styles de la GRILLE (Multi-lignes) --- */
+.latest-articles-grid {
+    /* Utilise Grid pour un affichage sur plusieurs lignes */
+    display: grid;
+    /* Crée des colonnes responsives (3 ou 4 sur desktop) */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; /* Espace entre les cartes */
+    padding-bottom: 40px; 
+}
+
+.article-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ... (Autres styles de carte et d'image/tags restent inchangés) ... */
+
+/* --- NOUVEAU : Styles de la Pagination Laravel --- */
+
+.pagination-links {
+    display: flex;
+    justify-content: center; /* Centre les liens de pagination */
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* Styles pour le conteneur UL généré par Laravel par défaut */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden; /* Assure que le border-radius fonctionne bien */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Style pour chaque élément de lien (LI) */
+.pagination li {
+    margin: 0;
+}
+
+/* Style pour les liens (A ou SPAN) */
+.pagination li a,
+.pagination li span {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #007bff; /* Couleur principale */
+    border: 1px solid #dee2e6;
+    background-color: #ffffff;
+    transition: all 0.2s;
+}
+
+/* Supprime la double bordure entre les éléments */
+.pagination li:not(:first-child) a,
+.pagination li:not(:first-child) span {
+    border-left: none;
+}
+
+/* Lien actif (page actuelle) */
+.pagination li.active span {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    font-weight: 600;
+}
+
+/* Effet de survol */
+.pagination li a:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+/* Liens Précédent/Suivant désactivés */
+.pagination li.disabled span {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+}
+
+/* ---------------------------------------------------------------- */
+/* --- RESPONSIVITÉ (Media Queries) --- */
+/* ---------------------------------------------------------------- */
+
+/* --- PETITS APPAREILS (smartphones, largeur < 768px) --- */
+@media (max-width: 767px) {
+    
+    .main-content-wrapper {
+        padding: 0 10px; /* Réduit le padding sur les bords */
+    }
+
+    /* 1. Bloc Public (Maquette) */
+
+    /* Force la grille à 1 seule colonne sur mobile */
+    .latest-articles-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px; /* Réduit l'espace entre les cartes */
+    }
+
+    .hero-banner-container {
+        height: 200px; /* Réduit la hauteur de la bannière */
+        margin-bottom: 20px;
+    }
+
+    .hero-title {
+        font-size: 1.8em;
+    }
+
+    .hero-subtitle {
+        font-size: 1em;
+    }
+    
+    .section-title {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+    }
+
+    /* 2. Bloc Administration */
+
+    .admin-main-container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    /* Empile les boutons d'action */
+    .action-buttons-container {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Permet aux boutons de prendre toute la largeur */
+    .primary-button, .secondary-button {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Empile le nom de catégorie et les actions */
+    .category-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .category-name-block {
+        width: 100%;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    /* Empile les boutons d'action individuels */
+    .category-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* --- MOYENS APPAREILS (tablettes, largeur entre 768px et 1024px) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    .main-content-wrapper {
+        padding: 0 20px;
+    }
+
+    /* Ajuste la grille à 2 ou 3 colonnes sur tablette */
+    .latest-articles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    }
+    
+    /* Assure que les catégories s'affichent correctement */
+    .category-item {
+        padding: 15px;
+    }
+}

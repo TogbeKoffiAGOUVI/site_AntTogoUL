@@ -5,10 +5,10 @@
         <h1 class="page-title">Liste des Catégories</h1>
 
         <div class="action-buttons-container">
-            <a href="{{ route('categories.create') }}" class="primary-button create-category-button">
+            <a href="{{ route('biblio.categories.create') }}" class="primary-button create-category-button">
                 Créer une Rubrique
             </a>
-            <a href="{{ route('documents.create') }}" class="secondary-button add-document-button">
+            <a href="{{ route('biblio.documents.create') }}" class="secondary-button add-document-button">
                 Ajouter un document
             </a>
         </div>
@@ -21,23 +21,23 @@
         @endif
 
         <div class="categories-list">
-            @forelse ($categories as $category)
+            @forelse ($biblioCategories as $biblioCategory)
                 <div class="category-item">
                     <div class="category-name-block">
                         <span class="category-label">Rubrique :</span>
-                        <span class="category-name">{{ $category->name }}</span>
+                        <span class="category-name">{{ $biblioCategory->name }}</span>
                     </div>
 
                     <div class="category-actions">
-                        <a href="{{ route('categories.show', $category->id) }}" class="action-link view-link">
+                        <a href="{{ route('biblio.categories.show', $biblioCategory->id) }}" class="action-link view-link">
                            lire
                         </a>
 
-                        <a href="{{ route('categories.edit', $category->id) }}" class="action-link edit-link">
+                        <a href="{{ route('biblio.categories.edit', $biblioCategory->id) }}" class="action-link edit-link">
                             Modifier
                         </a>
 
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="post"
+                        <form action="{{ route('biblio.categories.destroy', $biblioCategory->id) }}" method="post"
                             onsubmit="return confirm('Êtes-vous sûr(e) de vouloir supprimer cette rubrique? Cette action sera irréversible !')"
                             class="delete-form">
                             @csrf

@@ -23,7 +23,7 @@
         @endif
         <!-- Fin Messages -->
 
-        <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data" class="post-form">
+        <form action="{{ route('biblio.documents.store') }}" method="POST" enctype="multipart/form-data" class="post-form">
             @csrf
 
             <!-- Champ Titre -->
@@ -40,12 +40,12 @@
 
             <!-- Champ Catégorie (Select) -->
             <div class="form-group">
-                <label for="category_id" class="form-label">Catégorie</label>
-                <select name="category_id" id="category_id" required class="form-select">
-                    @forelse ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ old('category_id', $category_id ?? null) == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
+                <label for="biblioCategory_id" class="form-label">Catégorie</label>
+                <select name="biblioCategory_id" id="biblioCategory_id" required class="form-select">
+                    @forelse ($biblioCategories as $biblioCategory)
+                        <option value="{{ $biblioCategory->id }}"
+                            {{ old('biblioCategory_id', $biblioCategory_id ?? null) == $biblioCategory->id ? 'selected' : '' }}>
+                            {{ $biblioCategory->name }}
                         </option>
                     @empty
                         <option value="">Pas de Catégorie.</option>
@@ -61,7 +61,7 @@
 
             <div class="action-buttons-group">
                 <button type="submit" class="submit-button primary-button">Ajouter le Document</button>
-                <a href="{{ route('categories.create') }}" class="secondary-button create-category-link">
+                <a href="{{ route('biblio.categories.create') }}" class="secondary-button create-category-link">
                     Créer une Rubrique
                 </a>
             </div>

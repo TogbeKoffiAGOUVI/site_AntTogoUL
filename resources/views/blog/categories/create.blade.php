@@ -4,9 +4,19 @@
 
     <main>
         <div>
-            <h1>Créer une Nouvelle Catégorie</h1>
+            <h1>Créer une Nouvelle Rebrique</h1>
 
-            <!-- Affichage des erreurs de validation -->
+            @if (session('success'))
+                <div>
+                    <strong>Succès :</strong> {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div>
+                    <strong>Erreur :</strong> {{ session('error') }}
+                </div>
+            @endif
             @if ($errors->any())
                 <div>
                     <strong>Erreur de validation :</strong>
@@ -18,41 +28,43 @@
                 </div>
             @endif
 
-            <form action="{{ route('categories.store') }}" method="POST">
+            <form action="{{ route('blog.categories.store') }}" method="POST">
                 @csrf
 
-                <!-- Champ Nom -->
                 <div>
-                    <label for="name">Nom de la Catégorie</label>
+                    <label for="name">Nom de la Rebrique</label>
                     <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                           placeholder="Ex: Anthropologie Sociale">
-                    @error('name')<p>{{ $message }}</p>@enderror
+                        placeholder="Ex: Anthropologie Sociale">
+                    @error('name')
+                        <p>{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Champ Slug -->
+
                 <div>
                     <label for="slug">Slug (URL)</label>
                     <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
-                           placeholder="Ex: anthropologie-sociale">
+                        placeholder="Ex: anthropologie-sociale">
                     <p>Laisser vide pour générer automatiquement à partir du nom.</p>
-                    @error('slug')<p>{{ $message }}</p>@enderror
+                    @error('slug')
+                        <p>{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Champ Description -->
                 <div>
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" rows="4"
-                              placeholder="Une courte description de cette catégorie.">{{ old('description') }}</textarea>
-                    @error('description')<p>{{ $message }}</p>@enderror
+                    <textarea name="description" id="description" rows="4" placeholder="Une courte description de cette catégorie.">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p>{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Boutons d'action -->
                 <div>
-                    <a href="{{ route('categories.index') }}">
+                    <a href="{{ route('blog.categories.index') }}">
                         Annuler
                     </a>
                     <button type="submit">
-                        Enregistrer la Catégorie
+                        Enregistrer la Rebrique
                     </button>
                 </div>
             </form>

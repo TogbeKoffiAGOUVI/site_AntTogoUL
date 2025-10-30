@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="view-documents-container">
-        <h1 class="page-title">Documents de la Catégorie : <span class="category-name-display">{{ $category->name }}</span>
+        <h1 class="page-title">Documents de la Catégorie : <span class="category-name-display">{{ $biblioCategory->name }}</span>
         </h1>
 
-        <a href="{{ route('categories.index') }}" class="back-link">
+        <a href="{{ route('biblio.categories.index') }}" class="back-link">
             &larr; Retour à la liste des catégories
         </a>
 

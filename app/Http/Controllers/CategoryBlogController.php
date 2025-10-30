@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryBlog;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryBlogController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource (ADMIN VIEW: /admin/blog/categories).
      */
     public function index()
     {
-        $categories = CategoryBlog::orderBy('name')->paginate(10);
-        return view('blog.categories.index', compact('categories'));
+
+        $categories = CategoryBlog::withCount('posts')->orderBy('name')->paginate(10); // Récupère les catégories avec leurs posts associés (pour compter les articles dans la vue)
+
+        $is_admin_view = true;
+
+        return view('blog.categories.index', compact('categories', 'is_admin_view'));
     }
 
     /**
@@ -30,38 +35,60 @@ class CategoryBlogController extends Controller
      */
     public function store(Request $request)
     {
+        // 1. Validation de base
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:category_blogs,slug', // <-- Validation sur le slug
             'description' => 'nullable|string',
         ]);
 
-        $slug = Str::slug($request->name); // Création du slug à partir du nom
-        CategoryBlog::create([
-            'name' => $request->name,
-            'slug' => $slug,
-            'description' => $request->description,
-        ]);
+        // 2. Logique de Slug (assure l'unicité)
+        // Utilise le slug fourni, ou le nom si le slug est vide
+        $baseSlug = $request->input('slug') ? Str::slug($request->input('slug')) : Str::slug($request->input('name'));
+        $uniqueSlug = $baseSlug;
+        $counter = 1;
 
-        return redirect()->route('blog.categories.index')->with('success', 'La catégorie "' . $request->name . '" a été créée avec succès.');
+        // Boucle pour garantir que le slug n'existe pas déjà
+        while (CategoryBlog::where('slug', $uniqueSlug)->exists()) {
+            $uniqueSlug = $baseSlug . '-' . $counter++;
+        }
+
+        // 3. Tentative de Création (avec gestion d'erreur)
+        try {
+            CategoryBlog::create([
+                'name' => $request->name,
+                'slug' => $uniqueSlug, // <-- Utilisation du slug unique
+                'description' => $request->description,
+            ]);
+
+            return redirect()->route('blog.categories.index')
+                ->with('success', 'La rubrique de blog **"' . $request->name . '"** a été créée avec succès.');
+        } catch (QueryException $e) {
+            // Retourne une erreur DB inattendue
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Une erreur de base de données est survenue. Le nom de la rebrique ou le slug est peut-être déjà utilisé.');
+        }
     }
 
 
     /**
-     * Display the specified resource.
-     * * Maintenant, charge les articles associés pour les afficher dans la vue de la catégorie.
+     * Display the specified resource (PUBLIC VIEW: /rubrique/{slug}).
      */
     public function show(CategoryBlog $category)
     {
-        // 1. Récupère les posts associés à cette catégorie.
-        // 2. Eager-load la relation 'category' sur les posts (même si déjà filtré, bonne pratique).
-        // 3. Trie par les plus récents et ajoute la pagination.
+        // 1. Récupère les articles PUBLIÉS associés à cette catégorie. (Ajout du filtre de statut)
         $posts = $category->posts()
             ->with('category')
+            ->where('status', 'published')
             ->latest()
             ->paginate(15);
 
+        // 2. Définir le drapeau sur FAUX pour afficher le rendu PUBLIC de la catégorie
+        $is_admin_view = false;
 
-        return view('blog.categories.show', compact('category', 'posts'));
+        // La vue 'blog.categories.show' affichera la liste des articles de cette catégorie
+        return view('blog.categories.show', compact('category', 'posts', 'is_admin_view'));
     }
 
     /**
@@ -77,25 +104,48 @@ class CategoryBlogController extends Controller
      */
     public function update(Request $request, CategoryBlog $category)
     {
-        //  Validation des données (ignorer l'unicité pour la catégorie actuelle)
+        // 1. Validation (Ignorer le slug de la catégorie actuelle pour l'unicité)
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'name' => 'required|string|max:255',
+            // Unicité du slug, en ignorant l'ID de la catégorie actuelle
+            'slug' => 'nullable|string|max:255|unique:category_blogs,slug,' . $category->id,
             'description' => 'nullable|string',
         ]);
 
-        // 2. Mise à jour du slug si le nom a changé
-        $slug = Str::slug($request->name);
+        // 2. Logique de Slug (assure l'unicité lors de la MAJ)
+        $newSlug = $request->input('slug') ? Str::slug($request->input('slug')) : Str::slug($request->input('name'));
 
-        // 3. Mise à jour des données
-        $category->update([
-            'name' => $request->name,
-            'slug' => $slug,
-            'description' => $request->description,
-        ]);
+        // Seulement si le slug généré est différent du slug actuel (si l'utilisateur l'a modifié)
+        if ($newSlug !== $category->slug) {
+            $uniqueSlug = $newSlug;
+            $counter = 1;
 
+            // Vérifie l'existence du slug en ignorant la catégorie actuelle
+            while (CategoryBlog::where('slug', $uniqueSlug)->where('id', '!=', $category->id)->exists()) {
+                $uniqueSlug = $newSlug . '-' . $counter++;
+            }
+            $data['slug'] = $uniqueSlug;
+        } else {
+            $data['slug'] = $category->slug; // Conserver l'ancien slug
+        }
 
-        return redirect()->route('blog.categories.index')->with('success', 'La catégorie "' . $request->name . '" a été mise à jour.');
+        // 3. Tentative de Mise à Jour (avec gestion d'erreur)
+        try {
+            $category->update([
+                'name' => $request->name,
+                'slug' => $data['slug'],
+                'description' => $request->description,
+            ]);
+
+            return redirect()->route('blog.categories.index')
+                ->with('success', 'La rubrique de blog **"' . $request->name . '"** a été mise à jour avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Une erreur est survenue lors de la mise à jour de la rebrique. Veuillez vérifier vos données.');
+        }
     }
+
 
 
     /**
@@ -103,10 +153,17 @@ class CategoryBlogController extends Controller
      */
     public function destroy(CategoryBlog $category)
     {
-        // NOTE: Assurez-vous d'avoir configuré la suppression en cascade 
-        // ou la mise à jour des clés étrangères pour les posts liés.
         $categoryName = $category->name;
-        $category->delete();
-        return redirect()->route('blog.categories.index')->with('success', 'La catégorie "' . $categoryName . '" a été supprimée.');
+
+        try {
+            $category->delete();
+
+            return redirect()->route('blog.categories.index')
+                ->with('success', 'La rubrique **"' . $categoryName . '"** a été supprimée avec succès.');
+        } catch (QueryException $e) {
+            // Gère l'erreur de clé étrangère (si des articles sont toujours attachés)
+            return redirect()->route('blog.categories.index')
+                ->with('error', 'Impossible de supprimer la rubrique **"' . $categoryName . '"** car elle contient encore des articles.');
+        }
     }
 }

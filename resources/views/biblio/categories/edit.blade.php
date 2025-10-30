@@ -4,7 +4,7 @@
     <div class="form-container">
         <h1 class="form-title">Modifier une rubrique</h1>
 
-        <form action="{{ route('categories.update', $category->id) }}" method="post" class="post-form">
+        <form action="{{ route('biblio.categories.update', $category->id) }}" method="post" class="post-form">
             @csrf
             @method('PUT')
 

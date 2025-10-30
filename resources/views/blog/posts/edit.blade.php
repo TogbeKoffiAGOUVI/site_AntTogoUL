@@ -3,8 +3,24 @@
 @section('content')
     <h1>Modifier l'article : {{ $post->title }}</h1>
 
+    {{-- BLOC D'AFFICHAGE DES MESSAGES FLASH (Succès et Erreur) --}}
+    @if (session('success'))
+        <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+            <strong>Succès :</strong> {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+            <strong>Erreur :</strong> {{ session('error') }}
+        </div>
+    @endif
+    {{-- FIN DU BLOC D'AFFICHAGE DES MESSAGES FLASH --}}
+
+
     @if ($errors->any())
-        <div>
+        <div style="color: red; margin-bottom: 15px;">
+            <strong>Erreur de validation :</strong>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -13,8 +29,8 @@
         </div>
     @endif
 
-    {{-- 1. AJOUTER L'ENCODAGE POUR LE FICHIER --}}
-    <form action="{{ route('posts.update', $post) }}" method="POST" enctype="multipart/form-data">
+
+    <form action="{{ route('blog.posts.update', $post) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -24,11 +40,12 @@
         <label>Slug :</label><br>
         <input type="text" name="slug" value="{{ old('slug', $post->slug) }}"><br><br>
 
-        <label>Catégorie :</label><br>
+        <label>Rebrique :</label><br>
         <select name="category_id">
-            {{-- Note: Il manque l'option vide ici, mais je garde la structure originale si $post->category_id est requis --}}
+
             @foreach ($categories as $category)
-                <option value="{{ $category->id }}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>
+                <option value="{{ $category->id }}"
+                    {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>
                     {{ $category->name }}
                 </option>
             @endforeach
@@ -59,11 +76,13 @@
         <input type="file" name="main_media" accept="image/*,video/*"><br>
         <small>Laissez vide pour conserver le média actuel.</small>
         <br><br>
-        
+
         <label>Type de média principal :</label><br>
         <select name="main_media_type">
-            <option value="image" {{ old('main_media_type', $post->main_media_type) == 'image' ? 'selected' : '' }}>Image</option>
-            <option value="video" {{ old('main_media_type', $post->main_media_type) == 'video' ? 'selected' : '' }}>Vidéo</option>
+            <option value="image" {{ old('main_media_type', $post->main_media_type) == 'image' ? 'selected' : '' }}>Image
+            </option>
+            <option value="video" {{ old('main_media_type', $post->main_media_type) == 'video' ? 'selected' : '' }}>Vidéo
+            </option>
         </select><br><br>
 
         <label>Status :</label><br>
@@ -74,6 +93,6 @@
         </select><br><br>
 
         <button type="submit"> Mettre à jour</button>
-        <a href="{{ route('posts.index') }}">Annuler</a>
+        <a href="{{ route('blog.posts.index') }}">Annuler</a>
     </form>
 @endsection

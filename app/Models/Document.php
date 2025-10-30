@@ -2,23 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    use HasFactory;
-
-    protected $fillable = [
+     protected $fillable = [
         'title',
         'description',
         'file_path',
-        'category_id',
+        'biblioCategory_id',
     ];
 
     // Relation : un document appartient à une catégorie
-    public function category()
+    public function bibioCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(BiblioCategory::class);
     }
 }

@@ -23,7 +23,7 @@
         @endif
         <!-- Fin Messages -->
 
-        <form action="{{ route('documents.update', $document->id) }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('biblio.documents.update', $document->id) }}" method="POST" enctype="multipart/form-data"
             class="post-form">
             @csrf
             @method('PUT')
@@ -43,12 +43,12 @@
 
             <!-- Champ Catégorie (Select) -->
             <div class="form-group">
-                <label for="category_id" class="form-label">Catégorie</label>
-                <select name="category_id" id="category_id" required class="form-select">
-                    @forelse ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ old('category_id', $document->category_id) == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
+                <label for="biblioCategory_id" class="form-label">Catégorie</label>
+                <select name="biblioCategory_id" id="biblioCategory_id" required class="form-select">
+                    @forelse ($biblioCategories as $biblioCategory)
+                        <option value="{{ $biblioCategory->id }}"
+                            {{ old('category_id', $document->biblioCategory_id) == $biblioCategory->id ? 'selected' : '' }}>
+                            {{ $biblioCategory->name }}
                         </option>
                     @empty
                         <option value="">Pas de Catégorie.</option>

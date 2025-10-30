@@ -3,11 +3,21 @@
 @section('content')
     <h1>Liste des articles</h1>
 
+    {{-- BLOC D'AFFICHAGE DES MESSAGES FLASH --}}
     @if (session('success'))
-        <p>{{ session('success') }}</p>
+        <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+            <strong>Succès :</strong> {{ session('success') }}
+        </div>
     @endif
 
-    <a href="{{ route('posts.create') }}">Créer un nouvel article</a>
+    @if (session('error'))
+        <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+            <strong>Erreur :</strong> {{ session('error') }}
+        </div>
+    @endif
+    {{-- FIN DU BLOC D'AFFICHAGE DES MESSAGES FLASH --}}
+
+    <a href="{{ route('blog.posts.create') }}">Créer un nouvel article</a>
 
     <table>
         <thead>
@@ -31,9 +41,9 @@
                     <td>{{ $post->status }}</td>
                     <td>{{ $post->views_count }}</td>
                     <td>
-                        <a href="{{ route('posts.show', $post) }}">Voir</a> |
-                        <a href="{{ route('posts.edit', $post) }}">Modifier</a> |
-                        <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('blog.posts.show', $post) }}">Voir</a> |
+                        <a href="{{ route('blog.posts.edit', $post) }}">Modifier</a> |
+                        <form action="{{ route('blog.posts.destroy', $post) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('Supprimer cet article ?')">

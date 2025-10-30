@@ -3,8 +3,23 @@
 @section('content')
     <h1>Créer un article</h1>
 
+    {{-- BLOC D'AFFICHAGE DES MESSAGES FLASH (Succès et Erreur) --}}
+    @if (session('success'))
+        <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+            <strong>Succès :</strong> {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+            <strong>Erreur :</strong> {{ session('error') }}
+        </div>
+    @endif
+    {{-- FIN DU BLOC D'AFFICHAGE DES MESSAGES FLASH --}}
+
     @if ($errors->any())
-        <div>
+        <div style="color: red; margin-bottom: 15px;">
+            <strong>Erreur de validation :</strong>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -13,19 +28,19 @@
         </div>
     @endif
 
-    {{-- 1. CHANGER L'ENCODAGE DU FORMULAIRE : Ajouter enctype="multipart/form-data" --}}
-    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('blog.posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <label>Titre :</label><br>
         <input type="text" name="title" value="{{ old('title') }}"><br><br>
 
         <label>Slug :</label><br>
-        <input type="text" name="slug" value="{{ old('slug') }}"><br><br>
+        <input type="text" name="slug" value="{{ old('slug') }}"><br>
+        <small>Laissez vide pour générer automatiquement (recommandé).</small><br><br>
 
         <label>Catégorie :</label><br>
         <select name="category_id">
-            <option value="">-- Choisir une catégorie --</option>
+            <option value="">-- Choisir une Rebrique --</option>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                     {{ $category->name }}
@@ -40,15 +55,13 @@
         <textarea name="excerpt" rows="3">{{ old('excerpt') }}</textarea><br><br>
 
         {{-- 2. CHAMPS DE TÉLÉCHARGEMENT DE FICHIER --}}
-        
+
         <label>Image miniature :</label><br>
-        <input type="file" name="thumbnail" accept="image/*"><br><br> 
-        {{-- Remplacé 'thumbnail_url' par 'thumbnail' et type="url" par type="file" --}}
+        <input type="file" name="thumbnail" accept="image/*"><br><br>
 
         <label>Média principal :</label><br>
         <input type="file" name="main_media" accept="image/*,video/*"><br><br>
-        {{-- Remplacé 'main_media_url' par 'main_media' et type="url" par type="file" --}}
-        
+
         <label>Type de média principal :</label><br>
         <select name="main_media_type">
             <option value="">-- Sélectionner --</option>
@@ -64,6 +77,6 @@
         </select><br><br>
 
         <button type="submit"> Enregistrer</button>
-        <a href="{{ route('posts.index') }}">Annuler</a>
+        <a href="{{ route('blog.posts.index') }}">Annuler</a>
     </form>
 @endsection

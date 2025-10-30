@@ -6,7 +6,7 @@
     
     <!-- Bouton d'action principal -->
     <div class="action-buttons-container">
-        <a href="{{ route('documents.create') }}" class="primary-button create-document-button">
+        <a href="{{ route('biblio.documents.create') }}" class="primary-button create-document-button">
             Ajouter un document
         </a>
     </div>
@@ -25,12 +25,12 @@
                 <div class="document-info-block">
                     <!-- Titre -->
                     <h2 class="document-title">
-                        <a href="{{ route('documents.show', $document->id) }}" class="title-link">{{ $document->title }}</a>
+                        <a href="{{ route('biblio.documents.show', $document->id) }}" class="title-link">{{ $document->title }}</a>
                     </h2>
 
                     <!-- Métadonnées -->
                     <div class="document-metadata">
-                        <p class="meta-item"><span class="label">Catégorie :</span> {{ $document->category->name ?? 'Non classé' }}</p>
+                        <p class="meta-item"><span class="label">Catégorie :</span> {{ $document->biblioCategory->name ?? 'Non classé' }}</p>
                         <p class="meta-item"><span class="label">Description :</span> {{ $document->description }}</p>
                     </div>
                 </div>
@@ -51,15 +51,15 @@
                 
                 <!-- Actions Document (Détails, Modifier, Supprimer) -->
                 <div class="document-crud-actions">
-                    <a href="{{ route('documents.edit', $document->id) }}" class="action-link edit-link">
+                    <a href="{{ route('biblio.documents.edit', $document->id) }}" class="action-link edit-link">
                         Modifier
                     </a>
                     
-                    <a href="{{ route('documents.show', $document->id) }}" class="action-link detail-link">
+                    <a href="{{ route('biblio.documents.show', $document->id) }}" class="action-link detail-link">
                         Détails
                     </a>
                     
-                    <form action="{{ route('documents.destroy', $document->id) }}" method="post"
+                    <form action="{{ route('biblio.documents.destroy', $document->id) }}" method="post"
                         onsubmit="return confirm('Êtes-vous sûr(e) de vouloir supprimer ce document? Cette action sera irréversible !')"
                         class="delete-form">
                         @csrf
